@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Birthday Surprise ❤️</title>
+
+<!-- QR generator -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif}
+body{
+  background:radial-gradient(circle at 50% 35%,#69006f 0%,#26002f 55%,#110014 100%);
+  color:#fff;
+}
+.screen{
+  position:absolute;inset:0;display:none;overflow:hidden;
+  align-items:center;justify-content:center;text-align:center;
+  padding:24px 16px;
+}
+.screen.active{display:flex}
+.content{width:min(92vw,480px);position:relative;z-index:5}
+h1,h2,p{margin:10px 0}
+h1{font-size:clamp(28px,8vw,48px)}
+h2{font-size:clamp(22px,6vw,34px)}
+p{line-height:1.55}
+button{
+  border:0;border-radius:999px;padding:14px 24px;margin:10px 5px;
+  background:linear-gradient(135deg,#ff2f83,#ff62a5);
+  color:white;font-weight:700;font-size:16px;
+  box-shadow:0 8px 25px #ff2f8355;cursor:pointer;
+}
+button:active{transform:scale(.96)}
+.small{font-size:13px;opacity:.85}
+
+/* floating hearts */
+.heart{position:fixed;font-size:22px;opacity:.65;animation:float 5s linear forwards;z-index:1}
+@keyframes float{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-15vh) rotate(360deg);opacity:0}}
+
+/* QR */
+.qr-card{
+  background:#ffffff12;border:1px solid #ffffff22;border-radius:28px;
+  padding:24px;backdrop-filter:blur(8px);box-shadow:0 0 40px #ff269955;
+}
+#qrcode{width:210px;height:210px;background:white;padding:10px;margin:20px auto;border-radius:14px}
+#qrcode img{width:190px!important;height:190px!important}
+.heartQR{
+  width:150px;height:135px;margin:0 auto 8px;position:relative;transform:rotate(-45deg);
+  background:#ff397f;border-radius:18px;box-shadow:0 0 35px #ff397f;
+}
+.heartQR:before,.heartQR:after{
+  content:"";position:absolute;width:150px;height:135px;background:#ff397f;border-radius:50%;
+}
+.heartQR:before{top:-75px;left:0}.heartQR:after{left:75px;top:0}
+
+/* lock */
+.lock{font-size:70px;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.pin{
+  width:210px;text-align:center;font-size:25px;letter-spacing:8px;
+  padding:14px;border-radius:15px;border:2px solid #ff4e91;
+  background:#16001c;color:white;outline:0;
+}
+
+/* cake */
+.cake-wrap{position:relative;width:250px;height:260px;margin:10px auto}
+.cake{position:absolute;left:35px;bottom:35px;width:180px;height:95px;border-radius:12px 12px 25px 25px;background:linear-gradient(#ff91b7,#ef397c);box-shadow:0 12px 30px #ff3f8766}
+.cake:before{content:"";position:absolute;left:0;top:-28px;width:180px;height:45px;border-radius:50%;background:#ffd5e2}
+.cake:after{content:"";position:absolute;left:10px;right:10px;top:35px;height:10px;border-radius:50%;background:#ffbdd2}
+.candle{position:absolute;left:118px;bottom:130px;width:14px;height:70px;background:#fff;z-index:2;border-radius:5px}
+.flame{position:absolute;left:113px;bottom:195px;font-size:38px;z-index:3;animation:flicker .35s infinite alternate}
+@keyframes flicker{to{transform:scale(1.15) rotate(3deg)}}
+.smoke{display:none;font-size:35px;position:absolute;left:108px;bottom:195px}
+.blown .flame{display:none}.blown .smoke{display:block;animation:smoke 1.5s forwards}
+@keyframes smoke{to{transform:translateY(-70px);opacity:0}}
+
+/* birthday photo / animated girl */
+.girl-photo{
+  width:150px;height:150px;border-radius:50%;object-fit:cover;
+  border:6px solid #ff7dad;box-shadow:0 0 30px #ff3f87;
+  animation:bob 1.5s ease-in-out infinite;
+}
+@keyframes bob{50%{transform:translateY(-10px) scale(1.03)}}
+.photo-placeholder{
+  width:150px;height:150px;border-radius:50%;margin:auto;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#ff397f,#ffb52e);
+  box-shadow:0 0 30px #ff397f;
+  font-size:55px;animation:bob 1.5s infinite;
+}
+
+/* gift */
+.gift{
+  width:170px;height:130px;margin:30px auto;position:relative;cursor:pointer;
+  animation:giftBounce 1s infinite alternate;
+}
+@keyframes giftBounce{to{transform:translateY(-10px)}}
+.gift-box{position:absolute;left:10px;bottom:0;width:150px;height:105px;background:#ff397f;border-radius:8px}
+.gift-lid{position:absolute;left:0;top:5px;width:170px;height:35px;background:#ff78a8;border-radius:8px;z-index:2}
+.gift-ribbon-v{position:absolute;left:68px;bottom:0;width:28px;height:105px;background:#ffd15c;z-index:3}
+.gift-ribbon-h{position:absolute;left:0;top:5px;width:170px;height:20px;background:#ffd15c;z-index:4}
+.gift.open{animation:none}.gift.open .gift-lid{animation:lid 1s forwards}
+@keyframes lid{to{transform:translateY(-70px) rotate(-8deg)}}
+
+/* video fire frame */
+.fire-video{
+  position:relative;width:min(92vw,500px);margin:15px auto;padding:13px;
+  border-radius:20px;background:#130016;
+  box-shadow:0 0 15px #ff3b00,0 0 35px #ff6a00,0 0 55px #ff0088;
+  animation:fireGlow 1s infinite alternate;
+}
+.fire-video video{width:100%;display:block;border-radius:13px;background:#000}
+.flames{
+  position:absolute;left:5px;right:5px;top:-27px;z-index:3;
+  font-size:25px;letter-spacing:-5px;white-space:nowrap;overflow:hidden;
+  animation:flameMove .3s infinite alternate;
+}
+.flames.bottom{top:auto;bottom:-27px;transform:rotate(180deg)}
+@keyframes flameMove{to{transform:scaleY(1.15) translateY(-4px)}}
+@keyframes fireGlow{to{box-shadow:0 0 25px #ff0000,0 0 55px #ff8c00,0 0 75px #ff0088}}
+
+/* envelope */
+.envelope{
+  position:relative;width:min(88vw,340px);height:220px;margin:35px auto;
+  cursor:pointer;perspective:800px;
+}
+.env-back{position:absolute;inset:0;background:#ff3f82;border-radius:9px;box-shadow:0 0 30px #ff3f82}
+.paper{
+  position:absolute;left:15px;bottom:10px;width:calc(100% - 30px);height:185px;
+  background:#fff8e8;color:#633b48;padding:18px;border-radius:4px;
+  z-index:2;overflow:hidden;transition:1.1s ease;text-align:left;font-family:Georgia,serif;
+}
+.paper h3{text-align:center;margin:3px 0 10px}.paper p{font-size:13px;line-height:1.4;margin:8px 0}
+.env-front{
+  position:absolute;left:0;bottom:0;width:0;height:0;
+  border-left:50% solid transparent;border-right:50% solid transparent;
+  border-bottom:110px solid #f52f75;z-index:4;
+}
+.env-flap{
+  position:absolute;top:0;left:0;width:0;height:0;
+  border-left:50% solid transparent;border-right:50% solid transparent;
+  border-top:110px solid #ff78a7;transform-origin:top;transition:1s;z-index:5;
+}
+.envelope.open .env-flap{transform:rotateX(180deg);z-index:1}
+.envelope.open .paper{transform:translateY(-135px);height:300px;overflow-y:auto}
+
+/* responsive */
+@media(max-height:650px){
+  .screen{padding-top:8px;padding-bottom:8px}
+  .cake-wrap{transform:scale(.82);margin:-5px auto}
+  .girl-photo,.photo-placeholder{width:120px;height:120px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= SETTINGS ================= -->
+<script>
+const birthdayGirl = "Amna";
+const PIN = "113141";
+const photoFile = "girl.jpg";
+const videoFile = "birthday.mp4";
+const musicFile = "music.mp3";
+</script>
+
+<!-- ================= QR SCREEN ================= -->
+<section class="screen active" id="qrScreen">
+  <div class="content">
+    <div class="qr-card">
+      <div style="font-weight:bold">❤️ Birthday Surprise QR</div>
+      <div class="heartQR"></div>
+      <div id="qrcode"></div>
+      <p class="small">Scan the QR to open the surprise ❤️</p>
+      <button onclick="goLock();startMusic()">💗 Open Here</button>
+      <p class="small">For sharing: upload this folder to a website first. SPCK localhost is not a public link.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOCK SCREEN ================= -->
+<section class="screen" id="lockScreen">
+  <div class="content">
+    <div class="lock">🔐</div>
+    <h2>Pink Secret Lock 💗</h2>
+    <p>Birthday surprise unlock karne ke liye PIN enter karo.</p>
+    <input class="pin" id="pinInput" type="password" inputmode="numeric" maxlength="6" placeholder="••••••">
+    <br>
+    <button onclick="unlock()">🔓 Unlock</button>
+    <p id="pinMsg"></p>
+  </div>
+</section>
+
+<!-- ================= CAKE ================= -->
+<section class="screen" id="cakeScreen">
+  <div class="content">
+    <p>🎉 A special surprise for</p>
+    <h2>🎂 Happy Birthday</h2>
+    <h1 id="cakeName"></h1>
+
+    <div class="cake-wrap" id="cakeWrap">
+      <div class="flame">🔥</div>
+      <div class="smoke">💨</div>
+      <div class="candle"></div>
+      <div class="cake"></div>
+    </div>
+
+    <p>🕯️ Candle ko bujhane ka waqt hai...</p>
+    <button id="blowBtn" onclick="blowCandle()">💨 Blow Candle</button>
+  </div>
+</section>
+
+<!-- ================= PHOTO GIRL ================= -->
+<section class="screen" id="girlScreen">
+  <div class="content">
+    <img id="girlPhoto" class="girl-photo" src="" alt="Birthday Girl"
+         onerror="showPhotoFallback()">
+    <div id="photoFallback" class="photo-placeholder" style="display:none">👧💗</div>
+    <h2>👑 Birthday Girl 👑</h2>
+    <h1 id="girlName"></h1>
+    <p>✨ Aaj ka din sirf tumhari khushi ke naam ✨</p>
+    <button onclick="show('giftScreen')">🎁 Next Surprise</button>
+  </div>
+</section>
+
+<!-- ================= GIFT ================= -->
+<section class="screen" id="giftScreen">
+  <div class="content">
+    <h2>🎁 Tumhare liye ek gift</h2>
+    <div class="gift" id="gift" onclick="openGift()">
+      <div class="gift-box"></div>
+      <div class="gift-ribbon-v"></div>
+      <div class="gift-lid"></div>
+      <div class="gift-ribbon-h"></div>
+    </div>
+    <p id="giftText">🎁 Gift ko touch karo</p>
+    <button id="giftNext" style="display:none" onclick="show('videoScreen')">🎬 Open Video</button>
+  </div>
+</section>
+
+<!-- ================= VIDEO ================= -->
+<section class="screen" id="videoScreen">
+  <div class="content">
+    <h2>🎬 Birthday Surprise</h2>
+    <div class="fire-video">
+      <div class="flames">🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥</div>
+      <video id="birthdayVideo" controls playsinline preload="metadata">
+        <source id="videoSource" src="" type="video/mp4">
+        Your browser does not support video.
+      </video>
+      <div class="flames bottom">🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥</div>
+    </div>
+    <p id="videoMsg" class="small"></p>
+    <button onclick="show('letterScreen')">💌 Next</button>
+  </div>
+</section>
+
+<!-- ================= LETTER ================= -->
+<section class="screen" id="letterScreen">
+  <div class="content">
+    <h2>💌 Aakhri Surprise</h2>
+    <p class="small" id="letterHint">Letter ko touch karo</p>
+
+    <div class="envelope" id="envelope" onclick="openLetter()">
+      <div class="env-back"></div>
+
+      <div class="paper">
+        <h3>💌 Meri Pyaari <span class="name"></span> ❤️</h3>
+        <p>Aaj ka din tumhari zindagi ka ek bohat khoobsurat din hai. 🎂</p>
+        <p>Allah tumhari zindagi ko hamesha khushiyon, sehat, kamyabi aur sukoon se bhar de. ✨</p>
+        <p>Tumhari har dua qabool ho, har khwab poora ho aur tumhari smile hamesha isi tarah khoobsurat rahe. 🌸</p>
+        <p style="text-align:center;font-weight:bold">Many Many Return of The Day! 🎂👑❤️</p>
+        <p style="text-align:center">Good Luck for your future! 🍀✨</p>
+        <p style="text-align:center;font-weight:bold">Good Luck & Take Care 👋❤️</p>
+        <p style="text-align:center;font-weight:bold">Bye Bye Bye 🌸❤️</p>
+      </div>
+
+      <div class="env-front"></div>
+      <div class="env-flap"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MUSIC ================= -->
+<audio id="music" loop preload="auto">
+  <source id="musicSource" src="" type="audio/mpeg">
+</audio>
+
+<script>
+/* ---------- setup ---------- */
+const screens = document.querySelectorAll(".screen");
+const music = document.getElementById("music");
+
+document.getElementById("cakeName").textContent = birthdayGirl;
+document.getElementById("girlName").textContent = birthdayGirl;
+document.querySelectorAll(".name").forEach(e => e.textContent = birthdayGirl);
+
+const photo = document.getElementById("girlPhoto");
+photo.src = photoFile;
+
+document.getElementById("videoSource").src = videoFile;
+document.getElementById("birthdayVideo").load();
+
+document.getElementById("musicSource").src = musicFile;
+music.load();
+
+/* ---------- QR ---------- */
+function makeQR(){
+  const box=document.getElementById("qrcode");
+  box.innerHTML="";
+  if(typeof QRCode === "undefined"){
+    box.innerHTML="<div style='color:#111;padding:55px 8px;font-size:13px'>QR library load nahi hui.<br>Internet on karke Preview refresh karo.</div>";
+    return;
+  }
+  new QRCode(box,{
+    text:window.location.href,
+    width:190,
+    height:190,
+    colorDark:"#111111",
+    colorLight:"#ffffff",
+    correctLevel:QRCode.CorrectLevel.H
+  });
+}
+makeQR();
+
+/* ---------- navigation ---------- */
+function show(id){
+  screens.forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  spawnHearts();
+}
+
+function goLock(){
+  show("lockScreen");
+}
+
+function unlock(){
+  const input=document.getElementById("pinInput");
+  const msg=document.getElementById("pinMsg");
+
+  if(input.value===PIN){
+    msg.textContent="❤️ Unlocked!";
+    startMusic();
+    setTimeout(()=>show("cakeScreen"),500);
+  }else{
+    msg.textContent="❌ Wrong PIN — try 113141";
+    input.value="";
+    input.focus();
+  }
+}
+
+/* ---------- music ---------- */
+function startMusic(){
+  music.play().catch(()=>{});
+}
+
+/* ---------- photo ---------- */
+function showPhotoFallback(){
+  document.getElementById("girlPhoto").style.display="none";
+  document.getElementById("photoFallback").style.display="flex";
+}
+
+/* ---------- candle ---------- */
+function blowCandle(){
+  document.getElementById("cakeWrap").classList.add("blown");
+  document.getElementById("blowBtn").disabled=true;
+  document.getElementById("blowBtn").textContent="🎉 Candle Blown!";
+  setTimeout(()=>show("girlScreen"),1400);
+}
+
+/* ---------- gift ---------- */
+function openGift(){
+  const gift=document.getElementById("gift");
+  gift.classList.add("open");
+  document.getElementById("giftText").textContent="✨ Gift opened!";
+  setTimeout(()=>{
+    document.getElementById("giftNext").style.display="inline-block";
+  },900);
+}
+
+/* ---------- letter ---------- */
+function openLetter(){
+  const env=document.getElementById("envelope");
+  if(env.classList.contains("open")) return;
+  env.classList.add("open");
+  document.getElementById("letterHint").textContent="💖 Letter opened";
+}
+
+/* ---------- floating hearts ---------- */
+function spawnHearts(){
+  for(let i=0;i<8;i++){
+    setTimeout(()=>{
+      const h=document.createElement("div");
+      h.className="heart";
+      h.textContent=["❤️","💗","💖","🌸","✨"][Math.floor(Math.random()*5)];
+      h.style.left=(Math.random()*95)+"vw";
+      h.style.animationDuration=(3+Math.random()*4)+"s";
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(),7000);
+    },i*180);
+  }
+}
+
+/* video missing message */
+document.getElementById("birthdayVideo").addEventListener("error",()=>{
+  document.getElementById("videoMsg").textContent=
+  "⚠️ birthday.mp4 same folder mein rakho. Video ke baghair baqi surprise phir bhi chalega.";
+});
+
+/* start hearts */
+setInterval(()=>spawnHearts(),6500);
+</script>
+
+</body>
+</html>
