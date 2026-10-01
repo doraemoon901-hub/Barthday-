@@ -2,415 +2,2321 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>Birthday Surprise ❤️</title>
 
-<!-- QR generator -->
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>Happy Birthday Amna 💖</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif}
-body{
-  background:radial-gradient(circle at 50% 35%,#69006f 0%,#26002f 55%,#110014 100%);
-  color:#fff;
-}
-.screen{
-  position:absolute;inset:0;display:none;overflow:hidden;
-  align-items:center;justify-content:center;text-align:center;
-  padding:24px 16px;
-}
-.screen.active{display:flex}
-.content{width:min(92vw,480px);position:relative;z-index:5}
-h1,h2,p{margin:10px 0}
-h1{font-size:clamp(28px,8vw,48px)}
-h2{font-size:clamp(22px,6vw,34px)}
-p{line-height:1.55}
-button{
-  border:0;border-radius:999px;padding:14px 24px;margin:10px 5px;
-  background:linear-gradient(135deg,#ff2f83,#ff62a5);
-  color:white;font-weight:700;font-size:16px;
-  box-shadow:0 8px 25px #ff2f8355;cursor:pointer;
-}
-button:active{transform:scale(.96)}
-.small{font-size:13px;opacity:.85}
 
-/* floating hearts */
-.heart{position:fixed;font-size:22px;opacity:.65;animation:float 5s linear forwards;z-index:1}
-@keyframes float{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-15vh) rotate(360deg);opacity:0}}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#160018;
+    color:white;
+}
+
+.screen{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100dvh;
+    display:none;
+    overflow:hidden;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.screen.active{
+    display:flex;
+}
+
+.container{
+    width:100%;
+    max-width:480px;
+    padding:
+        max(18px,env(safe-area-inset-top))
+        20px
+        max(18px,env(safe-area-inset-bottom));
+    margin:auto;
+}
+
+.title{
+    font-size:clamp(28px,8vw,46px);
+    font-weight:800;
+    line-height:1.15;
+    margin-bottom:12px;
+}
+
+.subtitle{
+    font-size:clamp(14px,4vw,19px);
+    line-height:1.5;
+    opacity:.9;
+}
+
+.btn{
+    border:0;
+    padding:14px 27px;
+    margin-top:22px;
+    border-radius:50px;
+    background:
+        linear-gradient(
+            135deg,
+            #ff3f93,
+            #ff86bb
+        );
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    box-shadow:
+        0 10px 30px
+        rgba(255,50,145,.35);
+    cursor:pointer;
+}
+
+.btn:active{
+    transform:scale(.94);
+}
+
+
+/* MUSIC */
+
+.music-button{
+    position:fixed;
+    z-index:9999;
+    top:max(12px,env(safe-area-inset-top));
+    right:14px;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.25);
+    background:rgba(0,0,0,.35);
+    color:white;
+    font-size:20px;
+    display:none;
+}
+
+.music-button.show{
+    display:block;
+}
+
 
 /* QR */
+
+#qrScreen{
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #ff66a9 0,
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #7524ff 0,
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #24001f,
+            #08000e
+        );
+}
+
 .qr-card{
-  background:#ffffff12;border:1px solid #ffffff22;border-radius:28px;
-  padding:24px;backdrop-filter:blur(8px);box-shadow:0 0 40px #ff269955;
-}
-#qrcode{width:210px;height:210px;background:white;padding:10px;margin:20px auto;border-radius:14px}
-#qrcode img{width:190px!important;height:190px!important}
-.heartQR{
-  width:150px;height:135px;margin:0 auto 8px;position:relative;transform:rotate(-45deg);
-  background:#ff397f;border-radius:18px;box-shadow:0 0 35px #ff397f;
-}
-.heartQR:before,.heartQR:after{
-  content:"";position:absolute;width:150px;height:135px;background:#ff397f;border-radius:50%;
-}
-.heartQR:before{top:-75px;left:0}.heartQR:after{left:75px;top:0}
-
-/* lock */
-.lock{font-size:70px;animation:pulse 1.4s infinite}
-@keyframes pulse{50%{transform:scale(1.08)}}
-.pin{
-  width:210px;text-align:center;font-size:25px;letter-spacing:8px;
-  padding:14px;border-radius:15px;border:2px solid #ff4e91;
-  background:#16001c;color:white;outline:0;
+    width:min(90%,390px);
+    padding:27px 20px;
+    border-radius:30px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(15px);
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
 }
 
-/* cake */
-.cake-wrap{position:relative;width:250px;height:260px;margin:10px auto}
-.cake{position:absolute;left:35px;bottom:35px;width:180px;height:95px;border-radius:12px 12px 25px 25px;background:linear-gradient(#ff91b7,#ef397c);box-shadow:0 12px 30px #ff3f8766}
-.cake:before{content:"";position:absolute;left:0;top:-28px;width:180px;height:45px;border-radius:50%;background:#ffd5e2}
-.cake:after{content:"";position:absolute;left:10px;right:10px;top:35px;height:10px;border-radius:50%;background:#ffbdd2}
-.candle{position:absolute;left:118px;bottom:130px;width:14px;height:70px;background:#fff;z-index:2;border-radius:5px}
-.flame{position:absolute;left:113px;bottom:195px;font-size:38px;z-index:3;animation:flicker .35s infinite alternate}
-@keyframes flicker{to{transform:scale(1.15) rotate(3deg)}}
-.smoke{display:none;font-size:35px;position:absolute;left:108px;bottom:195px}
-.blown .flame{display:none}.blown .smoke{display:block;animation:smoke 1.5s forwards}
-@keyframes smoke{to{transform:translateY(-70px);opacity:0}}
+.qr-heart{
+    font-size:52px;
+    animation:heartbeat 1.2s infinite;
+}
 
-/* birthday photo / animated girl */
+.qr-box{
+    width:min(72vw,260px);
+    height:min(72vw,260px);
+    margin:20px auto;
+    padding:12px;
+    background:white;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#qrcode{
+    width:220px;
+    height:220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#qrcode img,
+#qrcode canvas{
+    width:220px !important;
+    height:220px !important;
+    max-width:100%;
+}
+
+.url-text{
+    font-size:11px;
+    opacity:.6;
+    word-break:break-all;
+    margin-top:8px;
+}
+
+
+/* PIN */
+
+#lockScreen{
+    background:
+        radial-gradient(
+            circle at 50% 0,
+            #ff6eaa,
+            transparent 34%
+        ),
+        linear-gradient(
+            160deg,
+            #290020,
+            #07000d
+        );
+}
+
+.lock-card{
+    width:min(90%,380px);
+    padding:28px 20px;
+    border-radius:30px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(15px);
+}
+
+.lock-icon{
+    font-size:60px;
+    margin-bottom:5px;
+}
+
+.pin-display{
+    height:48px;
+    margin:18px 0;
+    font-size:26px;
+    letter-spacing:7px;
+}
+
+.pin-error{
+    min-height:22px;
+    color:#ff8abb;
+    font-size:13px;
+}
+
+.keypad{
+    width:min(100%,290px);
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.key{
+    height:56px;
+    border:0;
+    border-radius:17px;
+    background:rgba(255,255,255,.11);
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.key:active{
+    transform:scale(.9);
+    background:#ff4c9b;
+}
+
+
+/* CAKE */
+
+#cakeScreen{
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #ff8fbd,
+            transparent 30%
+        ),
+        linear-gradient(
+            160deg,
+            #2b0022,
+            #08000e
+        );
+}
+
+.cake-area{
+    position:relative;
+    width:280px;
+    height:300px;
+    margin:5px auto 0;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+}
+
+.cake{
+    position:relative;
+    width:230px;
+    height:125px;
+    border-radius:18px 18px 25px 25px;
+    background:linear-gradient(#ff91bd,#ef3e8c);
+    box-shadow:
+        0 20px 40px
+        rgba(255,40,130,.35);
+}
+
+.cake-top{
+    position:absolute;
+    left:0;
+    top:-25px;
+    width:100%;
+    height:48px;
+    background:#fff5fa;
+    border-radius:50%;
+    box-shadow:inset 0 -9px #ff78ad;
+}
+
+.candle{
+    position:absolute;
+    bottom:105px;
+    width:14px;
+    height:62px;
+    border-radius:7px;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            white 0 8px,
+            #ff8ab9 8px 15px
+        );
+}
+
+.candle.c1{
+    left:53px;
+}
+
+.candle.c2{
+    left:108px;
+}
+
+.candle.c3{
+    right:53px;
+}
+
+.flame{
+    position:absolute;
+    left:-2px;
+    top:-27px;
+    width:18px;
+    height:27px;
+    background:#ffd44d;
+    border-radius:50%;
+    box-shadow:0 0 20px #ffae00;
+    animation:flameMove .3s infinite alternate;
+}
+
+.flame.off{
+    display:none;
+}
+
+@keyframes flameMove{
+    from{
+        transform:scale(.85) rotate(-5deg);
+    }
+    to{
+        transform:scale(1.08) rotate(5deg);
+    }
+}
+
+
+/* GIRL */
+
+#girlScreen{
+    background:
+        radial-gradient(
+            circle at 50% 0,
+            #ff6eaa,
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #2a001f,
+            #07000d
+        );
+}
+
 .girl-photo{
-  width:150px;height:150px;border-radius:50%;object-fit:cover;
-  border:6px solid #ff7dad;box-shadow:0 0 30px #ff3f87;
-  animation:bob 1.5s ease-in-out infinite;
-}
-@keyframes bob{50%{transform:translateY(-10px) scale(1.03)}}
-.photo-placeholder{
-  width:150px;height:150px;border-radius:50%;margin:auto;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#ff397f,#ffb52e);
-  box-shadow:0 0 30px #ff397f;
-  font-size:55px;animation:bob 1.5s infinite;
+    position:relative;
+    width:min(78vw,320px);
+    height:min(55vh,460px);
+    min-height:300px;
+    margin:16px auto;
+    border-radius:28px;
+    overflow:hidden;
+    border:4px solid rgba(255,255,255,.35);
+    box-shadow:
+        0 25px 70px
+        rgba(255,60,160,.3);
+    animation:girlIn 1.1s ease;
 }
 
-/* gift */
+.girl-photo img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    object-position:center top;
+}
+
+@keyframes girlIn{
+    from{
+        opacity:0;
+        transform:translateY(45px) scale(.82);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.floating-heart{
+    position:absolute;
+    font-size:28px;
+    animation:heartFloat 4s linear infinite;
+}
+
+.fh1{
+    left:5%;
+    bottom:5%;
+}
+
+.fh2{
+    right:7%;
+    bottom:25%;
+    animation-delay:1s;
+}
+
+.fh3{
+    left:12%;
+    top:20%;
+    animation-delay:2s;
+}
+
+@keyframes heartFloat{
+    0%{
+        opacity:0;
+        transform:translateY(0) scale(.7);
+    }
+    20%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+        transform:translateY(-220px) scale(1.2);
+    }
+}
+
+
+/* GIFT */
+
+#giftScreen{
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #ff6dac,
+            transparent 30%
+        ),
+        linear-gradient(
+            160deg,
+            #26001f,
+            #08000d
+        );
+}
+
 .gift{
-  width:170px;height:130px;margin:30px auto;position:relative;cursor:pointer;
-  animation:giftBounce 1s infinite alternate;
+    position:relative;
+    width:200px;
+    height:175px;
+    margin:20px auto;
+    cursor:pointer;
+    transition:.4s;
 }
-@keyframes giftBounce{to{transform:translateY(-10px)}}
-.gift-box{position:absolute;left:10px;bottom:0;width:150px;height:105px;background:#ff397f;border-radius:8px}
-.gift-lid{position:absolute;left:0;top:5px;width:170px;height:35px;background:#ff78a8;border-radius:8px;z-index:2}
-.gift-ribbon-v{position:absolute;left:68px;bottom:0;width:28px;height:105px;background:#ffd15c;z-index:3}
-.gift-ribbon-h{position:absolute;left:0;top:5px;width:170px;height:20px;background:#ffd15c;z-index:4}
-.gift.open{animation:none}.gift.open .gift-lid{animation:lid 1s forwards}
-@keyframes lid{to{transform:translateY(-70px) rotate(-8deg)}}
 
-/* video fire frame */
-.fire-video{
-  position:relative;width:min(92vw,500px);margin:15px auto;padding:13px;
-  border-radius:20px;background:#130016;
-  box-shadow:0 0 15px #ff3b00,0 0 35px #ff6a00,0 0 55px #ff0088;
-  animation:fireGlow 1s infinite alternate;
+.gift-box{
+    position:absolute;
+    left:5px;
+    bottom:0;
+    width:190px;
+    height:120px;
+    border-radius:8px;
+    background:
+        linear-gradient(
+            135deg,
+            #ff4997,
+            #c9166a
+        );
 }
-.fire-video video{width:100%;display:block;border-radius:13px;background:#000}
-.flames{
-  position:absolute;left:5px;right:5px;top:-27px;z-index:3;
-  font-size:25px;letter-spacing:-5px;white-space:nowrap;overflow:hidden;
-  animation:flameMove .3s infinite alternate;
-}
-.flames.bottom{top:auto;bottom:-27px;transform:rotate(180deg)}
-@keyframes flameMove{to{transform:scaleY(1.15) translateY(-4px)}}
-@keyframes fireGlow{to{box-shadow:0 0 25px #ff0000,0 0 55px #ff8c00,0 0 75px #ff0088}}
 
-/* envelope */
+.gift-lid{
+    position:absolute;
+    z-index:5;
+    left:-5px;
+    top:25px;
+    width:200px;
+    height:43px;
+    border-radius:8px;
+    background:#ff82ba;
+    transition:.8s cubic-bezier(.2,.8,.2,1);
+}
+
+.gift-ribbon{
+    position:absolute;
+    z-index:3;
+    left:80px;
+    bottom:0;
+    width:35px;
+    height:120px;
+    background:#ffd458;
+}
+
+.gift-bow{
+    position:absolute;
+    z-index:8;
+    left:66px;
+    top:-20px;
+    font-size:58px;
+    transition:.8s;
+}
+
+.gift.open .gift-lid{
+    transform:translateY(-105px) rotate(-8deg);
+}
+
+.gift.open .gift-bow{
+    transform:translateY(-105px) rotate(-12deg);
+}
+
+.gift.open{
+    animation:giftShake .5s;
+}
+
+@keyframes giftShake{
+    25%{
+        transform:rotate(-4deg);
+    }
+    75%{
+        transform:rotate(4deg);
+    }
+}
+
+.hidden{
+    display:none !important;
+}
+
+
+/* =====================================================
+   EXTRA COLOURFUL FIREWORKS
+===================================================== */
+
+#fireworkScreen{
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #39004b,
+            #050006 72%
+        );
+}
+
+#fireCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+
+.firework-content{
+    position:relative;
+    z-index:5;
+    width:100%;
+    padding:20px;
+}
+
+.big-firework{
+    font-size:65px;
+    animation:heartbeat 1s infinite;
+}
+
+@keyframes heartbeat{
+    50%{
+        transform:scale(1.13);
+    }
+}
+
+.balloon{
+    position:absolute;
+    z-index:3;
+    bottom:-100px;
+    font-size:45px;
+    animation:balloonUp 6s linear infinite;
+}
+
+.balloon1{
+    left:7%;
+}
+
+.balloon2{
+    left:45%;
+    animation-delay:2s;
+}
+
+.balloon3{
+    right:8%;
+    animation-delay:4s;
+}
+
+@keyframes balloonUp{
+    0%{
+        opacity:0;
+        transform:translateY(0);
+    }
+    15%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+        transform:translateY(-110vh);
+    }
+}
+
+
+/* LETTER */
+
+#letterScreen{
+    background:
+        radial-gradient(
+            circle at 50% 5%,
+            #ff75b0,
+            transparent 31%
+        ),
+        linear-gradient(
+            160deg,
+            #290020,
+            #07000d
+        );
+}
+
+.letter-container{
+    width:min(90vw,400px);
+    margin:auto;
+}
+
 .envelope{
-  position:relative;width:min(88vw,340px);height:220px;margin:35px auto;
-  cursor:pointer;perspective:800px;
+    position:relative;
+    width:100%;
+    aspect-ratio:1.5 / 1;
+    margin:22px auto 0;
+    perspective:1200px;
+    cursor:pointer;
+    overflow:visible;
 }
-.env-back{position:absolute;inset:0;background:#ff3f82;border-radius:9px;box-shadow:0 0 30px #ff3f82}
-.paper{
-  position:absolute;left:15px;bottom:10px;width:calc(100% - 30px);height:185px;
-  background:#fff8e8;color:#633b48;padding:18px;border-radius:4px;
-  z-index:2;overflow:hidden;transition:1.1s ease;text-align:left;font-family:Georgia,serif;
-}
-.paper h3{text-align:center;margin:3px 0 10px}.paper p{font-size:13px;line-height:1.4;margin:8px 0}
-.env-front{
-  position:absolute;left:0;bottom:0;width:0;height:0;
-  border-left:50% solid transparent;border-right:50% solid transparent;
-  border-bottom:110px solid #f52f75;z-index:4;
-}
-.env-flap{
-  position:absolute;top:0;left:0;width:0;height:0;
-  border-left:50% solid transparent;border-right:50% solid transparent;
-  border-top:110px solid #ff78a7;transform-origin:top;transition:1s;z-index:5;
-}
-.envelope.open .env-flap{transform:rotateX(180deg);z-index:1}
-.envelope.open .paper{transform:translateY(-135px);height:300px;overflow-y:auto}
 
-/* responsive */
-@media(max-height:650px){
-  .screen{padding-top:8px;padding-bottom:8px}
-  .cake-wrap{transform:scale(.82);margin:-5px auto}
-  .girl-photo,.photo-placeholder{width:120px;height:120px}
+.envelope-body{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:#ed8db8;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.4);
 }
+
+.envelope-body:before{
+    content:"";
+    position:absolute;
+    left:-32%;
+    bottom:-38%;
+    width:72%;
+    height:75%;
+    background:#d875a4;
+    transform:rotate(45deg);
+}
+
+.envelope-body:after{
+    content:"";
+    position:absolute;
+    right:-32%;
+    bottom:-38%;
+    width:72%;
+    height:75%;
+    background:#d875a4;
+    transform:rotate(-45deg);
+}
+
+.letter-paper{
+    position:absolute;
+    z-index:3;
+    left:7%;
+    bottom:3%;
+    width:86%;
+    height:88%;
+    padding:19px;
+    background:#fffafc;
+    color:#5c183e;
+    border-radius:9px;
+    text-align:left;
+    overflow:auto;
+    transform:translateY(120%);
+    opacity:0;
+    pointer-events:none;
+    transition:
+        transform 1s cubic-bezier(.22,.61,.36,1),
+        opacity .45s ease;
+}
+
+.envelope.open .letter-paper{
+    transform:translateY(-8%);
+    opacity:1;
+    pointer-events:auto;
+}
+
+.flap{
+    position:absolute;
+    z-index:6;
+    left:0;
+    top:0;
+    width:100%;
+    height:66%;
+    background:#ffb8d5;
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 100%
+        );
+    transform-origin:top;
+    transition:
+        transform 1s cubic-bezier(.2,.8,.2,1);
+}
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+    z-index:1;
+}
+
+.envelope-heart{
+    position:absolute;
+    z-index:10;
+    left:50%;
+    top:52%;
+    transform:translate(-50%,-50%);
+    font-size:30px;
+    transition:opacity .3s;
+}
+
+.envelope.open .envelope-heart{
+    opacity:0;
+}
+
+.letter-hint{
+    margin-top:17px;
+    font-size:14px;
+    opacity:.85;
+}
+
+
+/* FINAL */
+
+#finalScreen{
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            #ff76b0,
+            transparent 35%
+        ),
+        linear-gradient(
+            160deg,
+            #27001f,
+            #07000d
+        );
+}
+
+.final-card{
+    width:min(90%,430px);
+    padding:32px 22px;
+    border-radius:30px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(15px);
+    box-shadow:
+        0 20px 70px
+        rgba(0,0,0,.4);
+}
+
+.final-heart{
+    font-size:78px;
+    animation:heartbeat 1s infinite;
+}
+
+
+/* SMALL PHONES */
+
+@media(max-height:680px){
+
+    .title{
+        font-size:29px;
+    }
+
+    .cake-area{
+        transform:scale(.78);
+        margin-top:-20px;
+        margin-bottom:-25px;
+    }
+
+    .girl-photo{
+        height:48vh;
+        min-height:250px;
+    }
+
+    .gift{
+        transform:scale(.82);
+        margin:0 auto -10px;
+    }
+
+    .envelope{
+        transform:scale(.88);
+        margin-top:5px;
+    }
+
+}
+
+@media(max-width:350px){
+
+    .container{
+        padding-left:12px;
+        padding-right:12px;
+    }
+
+    .key{
+        height:51px;
+    }
+
+    .qr-box{
+        width:230px;
+        height:230px;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- ================= SETTINGS ================= -->
-<script>
-const birthdayGirl = "Amna";
-const PIN = "113141";
-const photoFile = "girl.jpg";
-const videoFile = "birthday.mp4";
-const musicFile = "music.mp3";
-</script>
 
-<!-- ================= QR SCREEN ================= -->
-<section class="screen active" id="qrScreen">
-  <div class="content">
-    <div class="qr-card">
-      <div style="font-weight:bold">❤️ Birthday Surprise QR</div>
-      <div class="heartQR"></div>
-      <div id="qrcode"></div>
-      <p class="small">Scan the QR to open the surprise ❤️</p>
-      <button onclick="goLock();startMusic()">💗 Open Here</button>
-      <p class="small">For sharing: upload this folder to a website first. SPCK localhost is not a public link.</p>
-    </div>
-  </div>
-</section>
+<audio id="birthdayMusic"
+loop
+preload="auto">
 
-<!-- ================= LOCK SCREEN ================= -->
-<section class="screen" id="lockScreen">
-  <div class="content">
-    <div class="lock">🔐</div>
-    <h2>Pink Secret Lock 💗</h2>
-    <p>Birthday surprise unlock karne ke liye PIN enter karo.</p>
-    <input class="pin" id="pinInput" type="password" inputmode="numeric" maxlength="6" placeholder="••••••">
-    <br>
-    <button onclick="unlock()">🔓 Unlock</button>
-    <p id="pinMsg"></p>
-  </div>
-</section>
+<source
+src="birthday.mp3"
+type="audio/mpeg">
 
-<!-- ================= CAKE ================= -->
-<section class="screen" id="cakeScreen">
-  <div class="content">
-    <p>🎉 A special surprise for</p>
-    <h2>🎂 Happy Birthday</h2>
-    <h1 id="cakeName"></h1>
-
-    <div class="cake-wrap" id="cakeWrap">
-      <div class="flame">🔥</div>
-      <div class="smoke">💨</div>
-      <div class="candle"></div>
-      <div class="cake"></div>
-    </div>
-
-    <p>🕯️ Candle ko bujhane ka waqt hai...</p>
-    <button id="blowBtn" onclick="blowCandle()">💨 Blow Candle</button>
-  </div>
-</section>
-
-<!-- ================= PHOTO GIRL ================= -->
-<section class="screen" id="girlScreen">
-  <div class="content">
-    <img id="girlPhoto" class="girl-photo" src="" alt="Birthday Girl"
-         onerror="showPhotoFallback()">
-    <div id="photoFallback" class="photo-placeholder" style="display:none">👧💗</div>
-    <h2>👑 Birthday Girl 👑</h2>
-    <h1 id="girlName"></h1>
-    <p>✨ Aaj ka din sirf tumhari khushi ke naam ✨</p>
-    <button onclick="show('giftScreen')">🎁 Next Surprise</button>
-  </div>
-</section>
-
-<!-- ================= GIFT ================= -->
-<section class="screen" id="giftScreen">
-  <div class="content">
-    <h2>🎁 Tumhare liye ek gift</h2>
-    <div class="gift" id="gift" onclick="openGift()">
-      <div class="gift-box"></div>
-      <div class="gift-ribbon-v"></div>
-      <div class="gift-lid"></div>
-      <div class="gift-ribbon-h"></div>
-    </div>
-    <p id="giftText">🎁 Gift ko touch karo</p>
-    <button id="giftNext" style="display:none" onclick="show('videoScreen')">🎬 Open Video</button>
-  </div>
-</section>
-
-<!-- ================= VIDEO ================= -->
-<section class="screen" id="videoScreen">
-  <div class="content">
-    <h2>🎬 Birthday Surprise</h2>
-    <div class="fire-video">
-      <div class="flames">🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥</div>
-      <video id="birthdayVideo" controls playsinline preload="metadata">
-        <source id="videoSource" src="" type="video/mp4">
-        Your browser does not support video.
-      </video>
-      <div class="flames bottom">🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥</div>
-    </div>
-    <p id="videoMsg" class="small"></p>
-    <button onclick="show('letterScreen')">💌 Next</button>
-  </div>
-</section>
-
-<!-- ================= LETTER ================= -->
-<section class="screen" id="letterScreen">
-  <div class="content">
-    <h2>💌 Aakhri Surprise</h2>
-    <p class="small" id="letterHint">Letter ko touch karo</p>
-
-    <div class="envelope" id="envelope" onclick="openLetter()">
-      <div class="env-back"></div>
-
-      <div class="paper">
-        <h3>💌 Meri Pyaari <span class="name"></span> ❤️</h3>
-        <p>Aaj ka din tumhari zindagi ka ek bohat khoobsurat din hai. 🎂</p>
-        <p>Allah tumhari zindagi ko hamesha khushiyon, sehat, kamyabi aur sukoon se bhar de. ✨</p>
-        <p>Tumhari har dua qabool ho, har khwab poora ho aur tumhari smile hamesha isi tarah khoobsurat rahe. 🌸</p>
-        <p style="text-align:center;font-weight:bold">Many Many Return of The Day! 🎂👑❤️</p>
-        <p style="text-align:center">Good Luck for your future! 🍀✨</p>
-        <p style="text-align:center;font-weight:bold">Good Luck & Take Care 👋❤️</p>
-        <p style="text-align:center;font-weight:bold">Bye Bye Bye 🌸❤️</p>
-      </div>
-
-      <div class="env-front"></div>
-      <div class="env-flap"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= MUSIC ================= -->
-<audio id="music" loop preload="auto">
-  <source id="musicSource" src="" type="audio/mpeg">
 </audio>
 
+<button
+id="musicButton"
+class="music-button"
+onclick="toggleMusic()">
+
+🔇
+
+</button>
+
+
+<!-- SCREEN 1 -->
+
+<section
+id="qrScreen"
+class="screen active">
+
+<div class="qr-card">
+
+<div class="qr-heart">
+💖
+</div>
+
+<h1 class="title">
+A Little Surprise
+</h1>
+
+<p class="subtitle">
+Scan this QR code
+to open your birthday surprise. ✨
+</p>
+
+<div class="qr-box">
+
+<div id="qrcode"></div>
+
+</div>
+
+<p
+id="urlText"
+class="url-text">
+</p>
+
+<button
+class="btn"
+onclick="goTo('lockScreen')">
+
+Enter Surprise 💕
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 2 -->
+
+<section
+id="lockScreen"
+class="screen">
+
+<div class="lock-card">
+
+<div class="lock-icon">
+🔐
+</div>
+
+<h1
+class="title"
+style="font-size:32px;">
+
+Pink Lock 💗
+
+</h1>
+
+<p class="subtitle">
+
+Secret PIN enter karo.
+
+</p>
+
+<div
+id="pinDisplay"
+class="pin-display">
+
+• • • • • •
+
+</div>
+
+<div
+id="pinError"
+class="pin-error">
+</div>
+
+<div class="keypad">
+
+<button
+class="key"
+onclick="pressPin('1')">
+1
+</button>
+
+<button
+class="key"
+onclick="pressPin('2')">
+2
+</button>
+
+<button
+class="key"
+onclick="pressPin('3')">
+3
+</button>
+
+<button
+class="key"
+onclick="pressPin('4')">
+4
+</button>
+
+<button
+class="key"
+onclick="pressPin('5')">
+5
+</button>
+
+<button
+class="key"
+onclick="pressPin('6')">
+6
+</button>
+
+<button
+class="key"
+onclick="pressPin('7')">
+7
+</button>
+
+<button
+class="key"
+onclick="pressPin('8')">
+8
+</button>
+
+<button
+class="key"
+onclick="pressPin('9')">
+9
+</button>
+
+<button
+class="key"
+onclick="clearPin()">
+⌫
+</button>
+
+<button
+class="key"
+onclick="pressPin('0')">
+0
+</button>
+
+<button
+class="key"
+onclick="checkPin()">
+✓
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 3 -->
+
+<section
+id="cakeScreen"
+class="screen">
+
+<div class="container">
+
+<h1 class="title">
+Happy Birthday Amna 🎂💖
+</h1>
+
+<p class="subtitle">
+
+Ek wish karo...
+phir candles blow karo. ✨
+
+</p>
+
+<div class="cake-area">
+
+<div class="cake">
+
+<div class="cake-top"></div>
+
+<div class="candle c1">
+<div class="flame"></div>
+</div>
+
+<div class="candle c2">
+<div class="flame"></div>
+</div>
+
+<div class="candle c3">
+<div class="flame"></div>
+</div>
+
+</div>
+
+</div>
+
+<button
+class="btn"
+onclick="blowCandles()">
+
+🕯️ Blow Candles
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 4 -->
+
+<section
+id="girlScreen"
+class="screen">
+
+<div class="container">
+
+<h1 class="title">
+
+Amna — Birthday Girl 💕
+    
+</h1>
+
+<div class="girl-photo">
+
+<img
+src="girl.jpg"
+alt="Birthday Girl"
+onerror="
+this.style.display='none';
+document.getElementById('photoError').style.display='block';
+">
+
+<div
+id="photoError"
+style="
+display:none;
+position:absolute;
+inset:0;
+background:#ff86b8;
+color:white;
+align-items:center;
+justify-content:center;
+padding:25px;
+font-weight:bold;
+">
+
+girl.jpg file
+same folder mein rakho ❤️
+
+</div>
+
+<span class="floating-heart fh1">
+💗
+</span>
+
+<span class="floating-heart fh2">
+💖
+</span>
+
+<span class="floating-heart fh3">
+💞
+</span>
+
+</div>
+
+<p class="subtitle">
+
+Aaj ka din sirf tumhara hai, Amna. 🌸💕
+
+</p>
+
+<button
+class="btn"
+onclick="goTo('giftScreen')">
+
+🎁 Next Surprise
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 5 -->
+
+<section
+id="giftScreen"
+class="screen">
+
+<div class="container">
+
+<h1 class="title">
+
+Amna Ke Liye Gift 🎁💖
+
+</h1>
+
+<p class="subtitle">
+
+Gift par tap karo. 💕
+
+</p>
+
+<div
+id="gift"
+class="gift"
+onclick="openGift()">
+
+<div class="gift-bow">
+🎀
+</div>
+
+<div class="gift-lid"></div>
+
+<div class="gift-box">
+
+<div class="gift-ribbon"></div>
+
+</div>
+
+</div>
+
+<button
+id="giftNext"
+class="btn hidden"
+onclick="goTo('fireworkScreen')">
+
+🎆 Birthday Celebration
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 6 -->
+
+<section
+id="fireworkScreen"
+class="screen">
+
+<canvas
+id="fireCanvas">
+</canvas>
+
+<div class="balloon balloon1">
+🎈
+</div>
+
+<div class="balloon balloon2">
+🎈
+</div>
+
+<div class="balloon balloon3">
+🎈
+</div>
+
+<div class="firework-content">
+
+<div class="big-firework">
+🎆✨🎇
+</div>
+
+<h1 class="title">
+
+HAPPY BIRTHDAY AMNA! 🎉💖
+
+</h1>
+
+<p class="subtitle">
+
+Tumhari zindagi hamesha
+khushiyon, smiles aur
+beautiful memories se bhari rahe. 💖✨
+
+</p>
+
+<button
+class="btn"
+onclick="goTo('letterScreen')">
+
+💌 Amna Ke Liye Ek Letter
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 7 -->
+
+<section
+id="letterScreen"
+class="screen">
+
+<div class="letter-container">
+
+<h1 class="title">
+
+A Letter For Amna 💌
+
+</h1>
+
+<p
+id="letterStatus"
+class="subtitle">
+
+Tumhara letter abhi band hai...
+
+</p>
+
+<div
+id="envelope"
+class="envelope"
+onclick="openLetter()">
+
+<div class="envelope-body"></div>
+
+<div class="letter-paper">
+
+<h2
+style="
+margin-bottom:14px;
+font-size:21px;
+">
+
+Meri Pyari Amna 💕
+
+</h2>
+
+<p
+style="
+line-height:1.75;
+font-size:15px;
+">
+
+Aaj ka din tumhare liye
+bohat hi special hai,
+aur main dil se dua karta hoon
+ke tumhari zindagi hamesha
+khushiyon se bhari rahe. ❤️
+
+</p>
+
+<br>
+
+<p
+style="
+line-height:1.75;
+font-size:15px;
+">
+
+Tum hamesha isi tarah
+muskurati raho, kyun ke
+tumhari smile bohat
+khoobsurat hai. 🌸
+
+</p>
+
+<br>
+
+<p
+style="
+line-height:1.75;
+font-size:15px;
+">
+
+Allah tumhari har achi dua
+qabool kare, tumhare har
+khwab ko haqeeqat banaye,
+aur tumhein zindagi ke har
+qadam par khushi aur kamyami
+de. 🤲✨
+
+</p>
+
+<br>
+
+<p
+style="
+line-height:1.75;
+font-size:15px;
+">
+
+Zindagi ke har naye din mein
+tumhein sukoon, mohabbat,
+kamyabi aur bohat sari
+beautiful memories milen. 💗
+
+</p>
+
+<br>
+
+<p
+style="
+line-height:1.75;
+font-size:15px;
+">
+
+Bas hamesha khush rehna,
+muskurana aur apni ye
+beautiful si personality
+kabhi change mat karna. 🥰
+
+</p>
+
+<br>
+
+<p
+style="
+line-height:1.75;
+font-size:15px;
+">
+
+Aur haan...
+aaj ka din sirf tumhara hai,
+is liye isay dil khol kar
+enjoy karna. 🎂🎉
+
+</p>
+
+<br>
+
+<p
+style="
+font-weight:bold;
+line-height:1.7;
+font-size:16px;
+">
+
+Dil se bohat bohat
+Happy Birthday Amna! 🎂💖
+
+<br><br>
+
+Allah tumhein hamesha
+khush aur mehfooz rakhe. 🤲❤️
+
+</p>
+
+</div>
+
+<div class="flap"></div>
+
+<div class="envelope-heart">
+💌
+</div>
+
+</div>
+
+<p
+id="letterHint"
+class="letter-hint">
+
+💗 Envelope par tap karke letter kholo
+
+</p>
+
+<button
+id="finalButton"
+class="btn hidden"
+onclick="goTo('finalScreen')">
+
+💖 Final Message
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 8 -->
+
+<section
+id="finalScreen"
+class="screen">
+
+<div class="final-card">
+
+<div class="final-heart">
+💖
+</div>
+
+<h1 class="title">
+
+Happy Birthday Amna! 🎂💕
+
+</h1>
+
+<p class="subtitle">
+
+May your life always be filled
+with happiness, peace, love
+and beautiful memories. ✨
+
+</p>
+
+<p
+style="
+margin-top:20px;
+font-size:17px;
+line-height:1.6;
+">
+
+Hamesha khush raho,
+hamesha muskurati raho. 🌸
+
+<br>
+
+You deserve all the happiness
+in the world. 💕
+
+</p>
+
+<!-- NEW FINAL MESSAGE -->
+
+<p
+style="
+margin-top:24px;
+font-size:17px;
+line-height:1.8;
+font-weight:bold;
+">
+
+Bas muj ko itna hi kehna tha... 🥺💖
+
+<br>
+
+Ab aap apna special day
+enjoy karo! 🎂🎉✨
+
+<br>
+
+Hamesha khush raho,
+hamesha muskurati raho. 🥰🌸
+
+<br>
+
+Bye 👋❤️
+
+</p>
+
+<button
+class="btn"
+onclick="location.reload()">
+
+🔄 Watch Again
+
+</button>
+
+</div>
+
+</section>
+
+
 <script>
-/* ---------- setup ---------- */
-const screens = document.querySelectorAll(".screen");
-const music = document.getElementById("music");
 
-document.getElementById("cakeName").textContent = birthdayGirl;
-document.getElementById("girlName").textContent = birthdayGirl;
-document.querySelectorAll(".name").forEach(e => e.textContent = birthdayGirl);
 
-const photo = document.getElementById("girlPhoto");
-photo.src = photoFile;
+/* SETTINGS */
 
-document.getElementById("videoSource").src = videoFile;
-document.getElementById("birthdayVideo").load();
+const SHARE_URL =
+"https://doraemoon901-hub.github.io/Birthday-/";
 
-document.getElementById("musicSource").src = musicFile;
-music.load();
 
-/* ---------- QR ---------- */
-function makeQR(){
-  const box=document.getElementById("qrcode");
-  box.innerHTML="";
-  if(typeof QRCode === "undefined"){
-    box.innerHTML="<div style='color:#111;padding:55px 8px;font-size:13px'>QR library load nahi hui.<br>Internet on karke Preview refresh karo.</div>";
-    return;
-  }
-  new QRCode(box,{
-    text:window.location.href,
-    width:190,
-    height:190,
-    colorDark:"#111111",
-    colorLight:"#ffffff",
-    correctLevel:QRCode.CorrectLevel.H
-  });
-}
-makeQR();
+const SECRET_PIN =
+"113141";
 
-/* ---------- navigation ---------- */
-function show(id){
-  screens.forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  spawnHearts();
-}
 
-function goLock(){
-  show("lockScreen");
-}
+/* SCREEN SYSTEM */
 
-function unlock(){
-  const input=document.getElementById("pinInput");
-  const msg=document.getElementById("pinMsg");
+function goTo(id){
 
-  if(input.value===PIN){
-    msg.textContent="❤️ Unlocked!";
-    startMusic();
-    setTimeout(()=>show("cakeScreen"),500);
-  }else{
-    msg.textContent="❌ Wrong PIN — try 113141";
-    input.value="";
-    input.focus();
-  }
-}
-
-/* ---------- music ---------- */
-function startMusic(){
-  music.play().catch(()=>{});
-}
-
-/* ---------- photo ---------- */
-function showPhotoFallback(){
-  document.getElementById("girlPhoto").style.display="none";
-  document.getElementById("photoFallback").style.display="flex";
-}
-
-/* ---------- candle ---------- */
-function blowCandle(){
-  document.getElementById("cakeWrap").classList.add("blown");
-  document.getElementById("blowBtn").disabled=true;
-  document.getElementById("blowBtn").textContent="🎉 Candle Blown!";
-  setTimeout(()=>show("girlScreen"),1400);
-}
-
-/* ---------- gift ---------- */
-function openGift(){
-  const gift=document.getElementById("gift");
-  gift.classList.add("open");
-  document.getElementById("giftText").textContent="✨ Gift opened!";
-  setTimeout(()=>{
-    document.getElementById("giftNext").style.display="inline-block";
-  },900);
-}
-
-/* ---------- letter ---------- */
-function openLetter(){
-  const env=document.getElementById("envelope");
-  if(env.classList.contains("open")) return;
-  env.classList.add("open");
-  document.getElementById("letterHint").textContent="💖 Letter opened";
-}
-
-/* ---------- floating hearts ---------- */
-function spawnHearts(){
-  for(let i=0;i<8;i++){
-    setTimeout(()=>{
-      const h=document.createElement("div");
-      h.className="heart";
-      h.textContent=["❤️","💗","💖","🌸","✨"][Math.floor(Math.random()*5)];
-      h.style.left=(Math.random()*95)+"vw";
-      h.style.animationDuration=(3+Math.random()*4)+"s";
-      document.body.appendChild(h);
-      setTimeout(()=>h.remove(),7000);
-    },i*180);
-  }
-}
-
-/* video missing message */
-document.getElementById("birthdayVideo").addEventListener("error",()=>{
-  document.getElementById("videoMsg").textContent=
-  "⚠️ birthday.mp4 same folder mein rakho. Video ke baghair baqi surprise phir bhi chalega.";
+document
+.querySelectorAll(".screen")
+.forEach(screen=>{
+screen.classList.remove("active");
 });
 
-/* start hearts */
-setInterval(()=>spawnHearts(),6500);
+const target =
+document.getElementById(id);
+
+if(!target){
+return;
+}
+
+target.classList.add("active");
+
+if(id !== "qrScreen"){
+
+document
+.getElementById("musicButton")
+.classList.add("show");
+
+}
+
+if(id === "fireworkScreen"){
+
+startFireworks();
+
+}
+
+}
+
+
+/* QR CODE */
+
+window.addEventListener(
+"load",
+function(){
+
+const qr =
+document.getElementById("qrcode");
+
+document.getElementById(
+"urlText"
+).textContent =
+SHARE_URL;
+
+if(
+typeof QRCode !==
+"undefined"
+){
+
+qr.innerHTML = "";
+
+new QRCode(
+qr,
+{
+text:SHARE_URL,
+width:220,
+height:220,
+colorDark:"#000000",
+colorLight:"#ffffff",
+correctLevel:
+QRCode.CorrectLevel.H
+}
+);
+
+}else{
+
+qr.innerHTML =
+"<div style='color:#111;font-size:13px;text-align:center;padding:20px'>" +
+"QR load nahi hua.<br>" +
+"Internet connection check karo." +
+"</div>";
+
+}
+
+}
+);
+
+
+/* PIN */
+
+let enteredPin = "";
+
+function updatePin(){
+
+let output = "";
+
+for(
+let i=0;
+i<6;
+i++
+){
+
+if(
+i < enteredPin.length
+){
+
+output += "● ";
+
+}else{
+
+output += "• ";
+
+}
+
+}
+
+document.getElementById(
+"pinDisplay"
+).textContent =
+output.trim();
+
+}
+
+
+function pressPin(number){
+
+if(
+enteredPin.length >= 6
+){
+
+return;
+
+}
+
+enteredPin += number;
+
+document.getElementById(
+"pinError"
+).textContent = "";
+
+updatePin();
+
+if(
+enteredPin.length === 6
+){
+
+setTimeout(
+checkPin,
+180
+);
+
+}
+
+}
+
+
+function clearPin(){
+
+enteredPin = "";
+
+document.getElementById(
+"pinError"
+).textContent = "";
+
+updatePin();
+
+}
+
+
+function checkPin(){
+
+if(
+enteredPin === SECRET_PIN
+){
+
+enteredPin = "";
+
+updatePin();
+
+startMusic();
+
+goTo("cakeScreen");
+
+}else{
+
+document.getElementById(
+"pinError"
+).textContent =
+"PIN ghalat hai 💔 Dobara try karo.";
+
+enteredPin = "";
+
+updatePin();
+
+}
+
+}
+
+
+/* CANDLE */
+
+function blowCandles(){
+
+document
+.querySelectorAll(".flame")
+.forEach(
+flame=>{
+flame.classList.add("off");
+}
+);
+
+setTimeout(
+function(){
+
+goTo("girlScreen");
+
+},
+1400
+);
+
+}
+
+
+/* GIFT */
+
+let giftOpened = false;
+
+function openGift(){
+
+if(giftOpened){
+
+return;
+
+}
+
+giftOpened = true;
+
+document
+.getElementById("gift")
+.classList.add("open");
+
+setTimeout(
+function(){
+
+document
+.getElementById("giftNext")
+.classList.remove("hidden");
+
+},
+750
+);
+
+}
+
+
+/* LETTER */
+
+let letterOpened = false;
+
+function openLetter(){
+
+if(letterOpened){
+
+return;
+
+}
+
+letterOpened = true;
+
+const envelope =
+document.getElementById(
+"envelope"
+);
+
+envelope.classList.add(
+"open"
+);
+
+document.getElementById(
+"letterStatus"
+).textContent =
+"Amna ka special letter khul gaya 💖";
+
+document.getElementById(
+"letterHint"
+).textContent =
+"💌 Letter parho...";
+
+setTimeout(
+function(){
+
+document
+.getElementById(
+"finalButton"
+)
+.classList.remove(
+"hidden"
+);
+
+document.getElementById(
+"letterHint"
+).textContent =
+"💖 Jab letter parh lo to Final Message dabao.";
+
+},
+1200
+);
+
+}
+
+
+/* MUSIC */
+
+const music =
+document.getElementById(
+"birthdayMusic"
+);
+
+const musicButton =
+document.getElementById(
+"musicButton"
+);
+
+function startMusic(){
+
+music
+.play()
+.then(
+function(){
+
+musicButton.textContent =
+"🔊";
+
+}
+)
+.catch(
+function(){
+
+musicButton.textContent =
+"🔇";
+
+}
+);
+
+}
+
+
+function toggleMusic(){
+
+if(
+music.paused
+){
+
+music
+.play()
+.then(
+function(){
+
+musicButton.textContent =
+"🔊";
+
+}
+)
+.catch(
+function(){
+
+musicButton.textContent =
+"🔇";
+
+}
+);
+
+}else{
+
+music.pause();
+
+musicButton.textContent =
+"🔇";
+
+}
+
+}
+
+
+/* =====================================================
+   SUPER COLOURFUL FIREWORK ENGINE
+===================================================== */
+
+const canvas =
+document.getElementById(
+"fireCanvas"
+);
+
+const ctx =
+canvas.getContext("2d");
+
+let particles = [];
+
+let fireworksRunning =
+false;
+
+
+function resizeCanvas(){
+
+canvas.width =
+window.innerWidth;
+
+canvas.height =
+window.innerHeight;
+
+}
+
+resizeCanvas();
+
+window.addEventListener(
+"resize",
+resizeCanvas
+);
+
+
+/* CREATE ONE BIG FIREWORK */
+
+function createFirework(){
+
+const x =
+Math.random() *
+canvas.width;
+
+const y =
+70 +
+Math.random() *
+canvas.height *
+.45;
+
+
+/* RANDOM BRIGHT COLOUR */
+
+const hue =
+Math.floor(
+Math.random() * 360
+);
+
+
+/* MANY PARTICLES */
+
+for(
+let i=0;
+i<120;
+i++
+){
+
+const angle =
+(
+Math.PI * 2 * i
+) / 120;
+
+const speed =
+2 +
+Math.random()*6;
+
+particles.push({
+
+x:x,
+
+y:y,
+
+vx:
+Math.cos(angle)
+* speed,
+
+vy:
+Math.sin(angle)
+* speed,
+
+life:
+70 +
+Math.random()*55,
+
+hue:
+hue +
+Math.random()*45,
+
+size:
+1.5 +
+Math.random()*3
+
+});
+
+}
+
+
+/* SECOND COLOUR BURST */
+
+for(
+let i=0;
+i<45;
+i++
+){
+
+const angle =
+Math.random()
+* Math.PI * 2;
+
+const speed =
+1 +
+Math.random()*3;
+
+particles.push({
+
+x:x,
+
+y:y,
+
+vx:
+Math.cos(angle)
+* speed,
+
+vy:
+Math.sin(angle)
+* speed,
+
+life:
+90,
+
+hue:
+Math.random()*360,
+
+size:
+2 +
+Math.random()*2
+
+});
+
+}
+
+}
+
+
+/* SMALL STAR BURST */
+
+function createMiniFirework(){
+
+const x =
+Math.random() *
+canvas.width;
+
+const y =
+80 +
+Math.random() *
+canvas.height *
+.55;
+
+const hue =
+Math.random()*360;
+
+for(
+let i=0;
+i<35;
+i++
+){
+
+const angle =
+(
+Math.PI*2*i
+)/35;
+
+const speed =
+1+
+Math.random()*3;
+
+particles.push({
+
+x:x,
+
+y:y,
+
+vx:
+Math.cos(angle)*speed,
+
+vy:
+Math.sin(angle)*speed,
+
+life:
+40+
+Math.random()*30,
+
+hue:hue,
+
+size:
+1+
+Math.random()*2
+
+});
+
+}
+
+}
+
+
+/* ANIMATE FIREWORKS */
+
+function animateFireworks(){
+
+if(
+!document
+.getElementById(
+"fireworkScreen"
+)
+.classList
+.contains("active")
+){
+
+requestAnimationFrame(
+animateFireworks
+);
+
+return;
+
+}
+
+
+/* DARK TRAIL */
+
+ctx.fillStyle =
+"rgba(5,0,8,.16)";
+
+ctx.fillRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+
+/* PARTICLES */
+
+for(
+let i=particles.length-1;
+i>=0;
+i--
+){
+
+const p =
+particles[i];
+
+p.x += p.vx;
+
+p.y += p.vy;
+
+p.vy += .035;
+
+p.vx *= .992;
+
+p.life--;
+
+
+/* GLOW */
+
+ctx.beginPath();
+
+ctx.arc(
+p.x,
+p.y,
+p.size+3,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle =
+"hsla("+
+p.hue+
+",100%,65%,.12)";
+
+ctx.fill();
+
+
+/* BRIGHT CORE */
+
+ctx.beginPath();
+
+ctx.arc(
+p.x,
+p.y,
+p.size,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle =
+"hsl("+
+p.hue+
+",100%,70%)";
+
+ctx.fill();
+
+
+if(
+p.life <= 0
+){
+
+particles.splice(
+i,
+1
+);
+
+}
+
+}
+
+requestAnimationFrame(
+animateFireworks
+);
+
+}
+
+
+/* START FIREWORKS */
+
+function startFireworks(){
+
+if(
+fireworksRunning
+){
+
+return;
+
+}
+
+fireworksRunning =
+true;
+
+
+/* START IMMEDIATELY */
+
+createFirework();
+createFirework();
+createMiniFirework();
+
+
+/* LOTS OF FIREWORKS */
+
+setInterval(
+function(){
+
+createFirework();
+
+},
+450
+);
+
+
+/* EXTRA SMALL BURSTS */
+
+setInterval(
+function(){
+
+createMiniFirework();
+
+},
+220
+);
+
+
+animateFireworks();
+
+}
+
+
+/* INITIALIZE */
+
+updatePin();
+
 </script>
 
 </body>
