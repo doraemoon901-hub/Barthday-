@@ -1,11 +1,11 @@
 <!DOCTYPE html>  <html lang="en">  
 <head>  
-<meta charset="UTF-8">  <meta name="viewport"  
-content="width=device-width,  
-initial-scale=1.0,  
-maximum-scale=5.0,  
+<meta charset="UTF-8">  <meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+minimum-scale=0.4,
+maximum-scale=5.0,
 user-scalable=yes">
-
 <title>Happy Birthday Amna 💖</title>  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>  <style>  
   
 *{  
@@ -1980,6 +1980,92 @@ animateFireworks();
 /* INITIALIZE */  
   
 updatePin();  
-  
+  /* PHONE PINCH ZOOM - ALL SCREENS */
+
+let pinchStartDistance = 0;
+let pinchStartScale = 1;
+let pageZoom = 1;
+
+function fingerDistance(touches){
+
+    const x =
+        touches[0].clientX -
+        touches[1].clientX;
+
+    const y =
+        touches[0].clientY -
+        touches[1].clientY;
+
+    return Math.sqrt(
+        x * x + y * y
+    );
+}
+
+document.body.addEventListener(
+    "touchstart",
+    function(e){
+
+        if(e.touches.length === 2){
+
+            e.preventDefault();
+
+            pinchStartDistance =
+                fingerDistance(e.touches);
+
+            pinchStartScale =
+                pageZoom;
+        }
+
+    },
+    {passive:false}
+);
+
+document.body.addEventListener(
+    "touchmove",
+    function(e){
+
+        if(e.touches.length === 2){
+
+            e.preventDefault();
+
+            const distance =
+                fingerDistance(e.touches);
+
+            if(pinchStartDistance > 0){
+
+                pageZoom =
+                    pinchStartScale *
+                    (distance / pinchStartDistance);
+
+                pageZoom =
+                    Math.max(
+                        0.5,
+                        Math.min(pageZoom, 3)
+                    );
+
+                document.body.style.transform =
+                    "scale(" + pageZoom + ")";
+
+                document.body.style.transformOrigin =
+                    "center center";
+            }
+        }
+
+    },
+    {passive:false}
+);
+
+document.body.addEventListener(
+    "touchend",
+    function(e){
+
+        if(e.touches.length < 2){
+
+            pinchStartDistance = 0;
+        }
+
+    },
+    {passive:false}
+);
 </script>  </body>  
 </html>
