@@ -1980,28 +1980,40 @@ animateFireworks();
 /* INITIALIZE */  
   
 updatePin();  
-  /* PHONE PINCH ZOOM - ALL SCREENS */
+/* PHONE PINCH ZOOM - ALL SCREENS */
+
+document.documentElement.style.touchAction = "none";
+document.body.style.touchAction = "none";
 
 let pinchStartDistance = 0;
 let pinchStartScale = 1;
 let pageZoom = 1;
 
-function fingerDistance(touches){
+function getDistance(touches){
 
-    const x =
+    const dx =
         touches[0].clientX -
         touches[1].clientX;
 
-    const y =
+    const dy =
         touches[0].clientY -
         touches[1].clientY;
 
     return Math.sqrt(
-        x * x + y * y
+        dx * dx + dy * dy
     );
 }
 
-document.body.addEventListener(
+function applyPageZoom(){
+
+    document.body.style.transform =
+        "scale(" + pageZoom + ")";
+
+    document.body.style.transformOrigin =
+        "center center";
+}
+
+document.addEventListener(
     "touchstart",
     function(e){
 
@@ -2010,7 +2022,7 @@ document.body.addEventListener(
             e.preventDefault();
 
             pinchStartDistance =
-                fingerDistance(e.touches);
+                getDistance(e.touches);
 
             pinchStartScale =
                 pageZoom;
@@ -2020,7 +2032,7 @@ document.body.addEventListener(
     {passive:false}
 );
 
-document.body.addEventListener(
+document.addEventListener(
     "touchmove",
     function(e){
 
@@ -2029,7 +2041,7 @@ document.body.addEventListener(
             e.preventDefault();
 
             const distance =
-                fingerDistance(e.touches);
+                getDistance(e.touches);
 
             if(pinchStartDistance > 0){
 
@@ -2040,14 +2052,13 @@ document.body.addEventListener(
                 pageZoom =
                     Math.max(
                         0.5,
-                        Math.min(pageZoom, 3)
+                        Math.min(
+                            pageZoom,
+                            3
+                        )
                     );
 
-                document.body.style.transform =
-                    "scale(" + pageZoom + ")";
-
-                document.body.style.transformOrigin =
-                    "center center";
+                applyPageZoom();
             }
         }
 
@@ -2055,7 +2066,7 @@ document.body.addEventListener(
     {passive:false}
 );
 
-document.body.addEventListener(
+document.addEventListener(
     "touchend",
     function(e){
 
